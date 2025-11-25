@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimateur d'Allocation en Dollars</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #005a9c;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #results {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .result-item {
+            background-color: #e9f5ff;
+            border-left: 4px solid #007bff;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+        }
+
+        .result-item strong {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Estimateur d'Allocation</h1>
+        <div class="input-group">
+            <label for="allocation">Entrez le montant de l'allocation</label>
+            <input type="number" id="allocation" placeholder="Ex: 1000" oninput="calculateEstimates()">
+        </div>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function calculateEstimates() {
+            const allocationInput = document.getElementById('allocation');
+            const resultsDiv = document.getElementById('results');
+            const allocation = parseFloat(allocationInput.value);
+
+            const multipliers = [0.01, 0.02, 0.03, 0.05, 0.08, 0.1];
+            let html = '';
+
+            if (!isNaN(allocation) && allocation > 0) {
+                multipliers.forEach(multiplier => {
+                    const estimate = allocation * multiplier;
+                    html += `<div class="result-item">Avec un facteur de <strong>${multiplier}</strong> : <strong>${estimate.toFixed(2)} $</strong></div>`;
+                });
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Appel initial pour le cas où la page est rechargée avec une valeur dans le champ
+        calculateEstimates();
+    </script>
+
+</body>
+</html>
